@@ -41,8 +41,8 @@ public class MovieController {
 
     //From here requested parameters as JSON are returned.
     //https://localhost:8080/movies
-    @GetMapping("movies/")
+    @GetMapping("movies/query")
     public Movie movieRequestParameters(@RequestParam int movieRank, @RequestParam String movieName, @RequestParam String genre){
-        return new Movie(movieRank,movieName, genre);
+        return new Movie(movieRank,movieName,genre);
     }
 }
