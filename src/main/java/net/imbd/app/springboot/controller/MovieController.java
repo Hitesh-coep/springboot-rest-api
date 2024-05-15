@@ -1,10 +1,8 @@
 package net.imbd.app.springboot.controller;
 
 import net.imbd.app.springboot.bean.Movie;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -44,5 +42,31 @@ public class MovieController {
     @GetMapping("movies/query")
     public Movie movieRequestParameters(@RequestParam int movieRank, @RequestParam String movieName, @RequestParam String genre){
         return new Movie(movieRank,movieName,genre);
+    }
+
+    //This REST API handles the incoming POST requests.
+    //https://localhost:8080/movies/create
+    @PostMapping("movies/create")
+    @ResponseStatus(HttpStatus.CREATED)
+    public Movie createMovie(@RequestBody Movie movie){
+        System.out.println(movie.getMovieRanking());
+        System.out.println(movie.getTitle());
+        System.out.println(movie.getGenre());
+        return movie;
+    }
+
+    // This REST API handles the PUT requests
+    @PutMapping("movies/{rank}/update")
+    public Movie updateMovie(@RequestBody Movie movie, @PathVariable("rank") int movieRank){
+        System.out.println(movie.getTitle());
+        System.out.println(movie.getGenre());
+        return movie;
+    }
+
+    // This REST API handles the DELETE request
+    @DeleteMapping("movies/{rank}/delete")
+    public String deleteMovie(@PathVariable("rank") int movieRank){
+        System.out.println(movieRank);
+        return "Movie Deleted Successfully!!!";
     }
 }
