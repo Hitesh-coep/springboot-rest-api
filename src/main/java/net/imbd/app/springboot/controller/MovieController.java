@@ -1,7 +1,9 @@
 package net.imbd.app.springboot.controller;
 
+import com.sun.net.httpserver.Headers;
 import net.imbd.app.springboot.bean.Movie;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -14,8 +16,18 @@ public class MovieController {
     //https://localhost:8080/movie
     @GetMapping("/movie")
     public Movie getMovie(){
+        return new Movie(1,"The Shawshank Redemption", "Thriller & Mystery");
+    }
+
+    //ResponseEntity is used to manipulate or return the complete HTTP response including HTTP Status Code, Header, Body
+    //Similarly we can use ResponseEntity as return type in other methods as well.
+    @GetMapping("movieres")
+    public ResponseEntity<Movie> getMovieUsingResponseEntity(){
         Movie movie = new Movie(1,"The Shawshank Redemption", "Thriller & Mystery");
-        return movie;
+        //return new ResponseEntity<>(movie,HttpStatus.OK);
+        //return ResponseEntity.ok(movie);
+        //Using another overloaded ok method to return header and body.
+        return ResponseEntity.ok().header("custom-header","moviename").body(movie);
     }
 
     //From here Array List as JSON is returned.
